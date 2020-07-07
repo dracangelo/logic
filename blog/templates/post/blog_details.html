@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block body %}
+   <main>
+      <!--? slider Area Start-->
+      <div class="slider-area ">
+         <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/about.jpg' %}">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-xl-12">
+                         <div class="hero-cap">
+                             <h2>Blog Details</h2>
+                             <nav aria-label="breadcrumb">
+                                 <ol class="breadcrumb">
+                                     <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                     <li class="breadcrumb-item"><a href="{% url 'blog:post_detail' post.id %}">Blog Details</a></li> 
+                                 </ol>
+                             </nav>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <!-- slider Area End-->
+      <!--================Blog Area =================-->
+      <section class="blog_area single-post-area section-padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-8 posts-list">
+                  <div class="single-post">
+                     <!-- <div class="feature-img">
+                        <img class="img-fluid" src="assets/img/blog/single_blog_1.png" alt="">
+                     </div> -->
+                     <div class="blog_details">
+                        <h2>{{ post_detail.title}}
+                        </h2>
+                        <ul class="blog-info-link mt-3 mb-4">
+                           <li><a href="#"><i class="fa fa-user"></i> {{ post_detail.tags }}</a></li>
+                           
+                        </ul>
+                        <p class="excert">
+                           {{ post_detail.content }}
+                        </p>
+                        
+                        
+                     </div>
+                  </div>
+                  <div class="navigation-top">
+                     
+                     <div class="navigation-area">
+                        <div class="row">
+                           {% if post_list.has_other_pages %}
+
+                                    <div class="col-md-12">
+                                    <ul class="pagination custom-pagination">
+                                        {% if post_list.has_previous %}
+                                        <li class="page-item prev"><a class="page-link" href="?page={{post_list.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+                                        {% else %}
+                                        <li class="disabled"></li>
+                                        {% endif %}
+
+                                        {% for pages in post_list.paginator.page_range %}
+                                        {% if post_list.number == pages %}
+                                            <li class="page-item active"><a class="page-linkx" href="#">{{pages}}</a></li>
+                                        {% else %}
+                                            <li class="page-item active"><a class="page-linkx" href="?page={{pages}}">{{pages}}</a></li>
+                                        {% endif %}
+                                        
+                                        {% endfor %}
+                                        
+
+                                        {% if post_list.has_next %}
+                                        <li class="page-item next"><a class="page-link" href="?page={{post_list.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                                        {% else %}
+                                        <li class="disabled"></li>
+                                        {% endif %} 
+                                    </ul>
+
+
+                                    </div>
+                                {% endif %}
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="comments-area">
+                     <h4>05 Comments</h4>
+                     <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                           {% for com in comment %}
+                           <div class="user justify-content-between d-flex">
+                              
+                              <div class="desc">
+                                 <p class="comment">
+                                    {{ com.comment }}
+                                 </p>
+                                 <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                       <h5>
+                                          <a href="#">{{ com.user }}</a>
+                                       </h5>
+                                       <p class="date">{{ com.created }} </p>
+                                    </div>
+                                    <div class="reply-btn">
+                                       <a href="#comment-form" class="btn-reply text-uppercase">reply</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           {% endfor %}
+                        </div>
+                     </div>
+                     
+                  </div>
+                  <div class="comment-form" id="comment-form">
+                     <h4>Leave a Reply</h4>
+                     <form method="POST" class="p-5 bg-light">
+                        {% csrf_token %}
+                        {% bootstrap_form comment_form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">Leave a Comment</button>
+                        {% endbuttons %}
+                    </form>
+                  </div>
+               </div>
+               <div class="col-lg-4">
+                  <div class="blog_right_sidebar">
+                     <aside class="single_sidebar_widget search_widget">
+                        <form action="{% url 'blog:post_list' %}" method="GET" class="search-form">
+                           <div class="form-group">
+                             <span class="icon fa fa-search"></span>
+                             <input type="text" class="form-control" name='q' value="{{request.Get.q}}" placeholder="Type a keyword and hit enter">
+                           </div>
+                         </form>
+                     </aside>
+                     <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Category</h4>
+                        <ul class="list cat-list">
+                           {% for cat in category %}
+                           <li><a href="#" class="d-flex"><p>{{ cat.category_name}}</p></a></li>
+                           {% endfor %}
+                           
+                        </ul>
+                     </aside>
+                     <aside class="single_sidebar_widget popular_post_widget">
+                        <h3 class="widget_title">Recent Post</h3>
+                        <div class="media post_item">
+                           <img src="assets/img/post/post_1.png" alt="post">
+                           <div class="media-body">
+                              <a href="blog_details.html">
+                                 <h3>From life was you fish...</h3>
+                              </a>
+                              <p>January 12, 2019</p>
+                           </div>
+                        </div>
+                        <div class="media post_item">
+                           <img src="assets/img/post/post_2.png" alt="post">
+                           <div class="media-body">
+                              <a href="blog_details.html">
+                                 <h3>The Amazing Hubble</h3>
+                              </a>
+                              <p>02 Hours ago</p>
+                           </div>
+                        </div>
+                        <div class="media post_item">
+                           <img src="assets/img/post/post_3.png" alt="post">
+                           <div class="media-body">
+                              <a href="blog_details.html">
+                                 <h3>Astronomy Or Astrology</h3>
+                              </a>
+                              <p>03 Hours ago</p>
+                           </div>
+                        </div>
+                        <div class="media post_item">
+                           <img src="assets/img/post/post_4.png" alt="post">
+                           <div class="media-body">
+                              <a href="blog_details.html">
+                                 <h3>Asteroids telescope</h3>
+                              </a>
+                              <p>01 Hours ago</p>
+                           </div>
+                        </div>
+                     </aside>
+                     <aside class="single_sidebar_widget tag_cloud_widget">
+                        <h4 class="widget_title">Tag Clouds</h4>
+                        <ul class="list">
+                           {% for tag in post_detail.tags.all %}  
+                           <li><a href="{% url 'blog:post_by_tag' tag %}" class="tag-cloud-link">{{tag.name}}</a></li>
+                           {% endfor %}
+                           
+                        </ul>
+                     </aside>
+                     
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!--================ Blog Area end =================-->
+
+   </main>
+{% endblock body %}

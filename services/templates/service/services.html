@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+    <main>
+        <!--? slider Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/about.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap">
+                                <h2>Our Services</h2>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="{% url 'services:services' %}">Our Services</a></li> 
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- slider Area End-->
+        <!--? Categories Area Start -->
+        <div class="categories-area section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Our Services</span>
+                            <h2>What We Can Do For You</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for men in service %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <img class="card-img-top img-fluid" src="{{ men.image.url }}" width="200px" height="40px" alt="Card image cap">
+                            </div>
+                            <div class="cat-cap">
+                                <h5>{{men.title}}</h5>
+                                <p>{{ men.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Categories Area End -->
+       
+    </main>
+{% endblock body %}
+
+<div class="single-team mb-30 text-center">
+    <div class="card-deck">
+       <div class="card team-img">
+          <img class="card-img-top img-fluid" src="{{ i.image.url }}" width="200px" height="40px" alt="Card image cap">
+          <div class="card-body team-caption">
+            <h5 class="card-title">{{ i.title }}</h5>
+            <p class="card-text">{{ i.position }}</p>
+            
+          </div>
+       </div>
+  </div>
+  </div>

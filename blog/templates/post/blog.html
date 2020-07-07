@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{% load bootstrap4 %}
+
+    <main>
+        <!--? slider Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap">
+                                <h2>Blog</h2>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="{% url 'blog:post_list' %}">Blog</a></li> 
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- slider Area End-->
+        <!--================Blog Area =================-->
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
+
+                            {% for dre in post_list %}
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="{{ dre.image.url }}" alt="">
+                                    <a href="#" class="blog_item_date">
+                                        <h3>{{ dre.created }}</h3>
+                                        
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="{% url 'blog:post_detail' post.id %}">
+                                    </a>
+                                    <p>{{dre.content|truncatewords:20}}</p>
+                                    <ul class="blog-info-link">
+                                        {% for tag in post_detail.tags.all %}  
+                                        <li><a href="{% url 'blog:post_by_tag' tag %}" class="tag-cloud-link">{{tag.name}}</a></li>
+                                        {% endfor %}
+                                        
+                                    </ul>
+                                </div>
+                            </article>
+                            {% endfor %}
+                            
+
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                {% if post_list.has_other_pages %}
+
+                                    <div class="col-md-12">
+                                    <ul class="pagination custom-pagination">
+                                        {% if post_list.has_previous %}
+                                        <li class="page-item prev"><a class="page-link" href="?page={{post_list.previous_page_number}}"><i class="fa fa-angle-left"></i></a></li>
+                                        {% else %}
+                                        <li class="disabled"></li>
+                                        {% endif %}
+
+                                        {% for pages in post_list.paginator.page_range %}
+                                        {% if post_list.number == pages %}
+                                            <li class="page-item active"><a class="page-linkx" href="#">{{pages}}</a></li>
+                                        {% else %}
+                                            <li class="page-item active"><a class="page-linkx" href="?page={{pages}}">{{pages}}</a></li>
+                                        {% endif %}
+                                        
+                                        {% endfor %}
+                                        
+
+                                        {% if post_list.has_next %}
+                                        <li class="page-item next"><a class="page-link" href="?page={{post_list.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                                        {% else %}
+                                        <li class="disabled"></li>
+                                        {% endif %} 
+                                    </ul>
+
+
+                                    </div>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form action="{% url 'blog:post_list' %}" method="GET" class="search-form">
+                                    <div class="form-group">
+                                      <span class="icon fa fa-search"></span>
+                                      <input type="text" class="form-control" name='q' value="{{request.Get.q}}" placeholder="Type a keyword and hit enter">
+                                    </div>
+                                  </form>
+                            </aside>
+
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title">Category</h4>
+                                <ul class="list cat-list">
+                                    {% for cat in category %}
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>{{ cat.category_name}}</p>
+                                            
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                  
+                                </ul>
+                            </aside>
+
+                            
+                            <aside class="single_sidebar_widget tag_cloud_widget">
+                                <h4 class="widget_title">Tag Clouds</h4>
+                                <ul class="list">
+                                        {% for tag in post_detail.tags.all %}  
+                                        <li><a href="{% url 'blog:post_by_tag' tag %}" class="tag-cloud-link">{{tag.name}}</a></li>
+                                        {% endfor %}
+                                  
+                                </ul>
+                            </aside>
+
+                            
+
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================Blog Area =================-->
+    </main>
+    {% endblock %}
