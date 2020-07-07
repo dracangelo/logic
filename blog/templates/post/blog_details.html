@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load bootstrap4 %}
 {% block body %}
    <main>
       <!--? slider Area Start-->
@@ -14,7 +13,9 @@
                              <nav aria-label="breadcrumb">
                                  <ol class="breadcrumb">
                                      <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                     <li class="breadcrumb-item"><a href="{% url 'blog:post_detail' post.id %}">Blog Details</a></li> 
+                                     <li class="breadcrumb-item">
+                                       <a href="#">Blog Details</a>
+                                       </li> 
                                  </ol>
                              </nav>
                          </div>
@@ -30,11 +31,11 @@
             <div class="row">
                <div class="col-lg-8 posts-list">
                   <div class="single-post">
-                     <!-- <div class="feature-img">
-                        <img class="img-fluid" src="assets/img/blog/single_blog_1.png" alt="">
-                     </div> -->
+                      <div class="feature-img">
+                        <img class="img-fluid" src="{{ post_detail.image }}" alt="">
+                     </div> 
                      <div class="blog_details">
-                        <h2>{{ post_detail.title}}
+                        <h2>{{ post_detail}}
                         </h2>
                         <ul class="blog-info-link mt-3 mb-4">
                            <li><a href="#"><i class="fa fa-user"></i> {{ post_detail.tags }}</a></li>
@@ -86,15 +87,15 @@
                   </div>
                   
                   <div class="comments-area">
-                     <h4>05 Comments</h4>
+                     <h4> Comments</h4>
                      <div class="comment-list">
                         <div class="single-comment justify-content-between d-flex">
-                           {% for com in comment %}
+                           {% for com in comments %}
                            <div class="user justify-content-between d-flex">
                               
                               <div class="desc">
                                  <p class="comment">
-                                    {{ com.comment }}
+                                    {{ com.content }}
                                  </p>
                                  <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
@@ -147,41 +148,15 @@
                      <aside class="single_sidebar_widget popular_post_widget">
                         <h3 class="widget_title">Recent Post</h3>
                         <div class="media post_item">
-                           <img src="assets/img/post/post_1.png" alt="post">
+                           <img src="{{ post_detail.image }}" alt="post">
                            <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3>From life was you fish...</h3>
+                              <a href="{% url 'blog:post_detail' post.id %}">
+                                 <h3>{{ post_detail.title}...</h3>
                               </a>
-                              <p>January 12, 2019</p>
+                              <p>{{ post_detail.created}}</p>
                            </div>
                         </div>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_2.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3>The Amazing Hubble</h3>
-                              </a>
-                              <p>02 Hours ago</p>
-                           </div>
-                        </div>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_3.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3>Astronomy Or Astrology</h3>
-                              </a>
-                              <p>03 Hours ago</p>
-                           </div>
-                        </div>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_4.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3>Asteroids telescope</h3>
-                              </a>
-                              <p>01 Hours ago</p>
-                           </div>
-                        </div>
+                        
                      </aside>
                      <aside class="single_sidebar_widget tag_cloud_widget">
                         <h4 class="widget_title">Tag Clouds</h4>

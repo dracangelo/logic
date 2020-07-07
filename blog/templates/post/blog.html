@@ -6,7 +6,7 @@
     <main>
         <!--? slider Area Start-->
         <div class="slider-area ">
-            <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+            <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/about.jpg' %}">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12">
@@ -43,9 +43,9 @@
                                 </div>
 
                                 <div class="blog_details">
-                                    <a class="d-inline-block" href="{% url 'blog:post_detail' post.id %}">
-                                    </a>
+                                    
                                     <p>{{dre.content|truncatewords:20}}</p>
+                                    <p><a href="" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
                                     <ul class="blog-info-link">
                                         {% for tag in post_detail.tags.all %}  
                                         <li><a href="{% url 'blog:post_by_tag' tag %}" class="tag-cloud-link">{{tag.name}}</a></li>
