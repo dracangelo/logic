@@ -56,7 +56,7 @@ def post_detail(request , id):
         'comment_form' : comment_form
     }
 
-    return render(request , 'post/blog_detail.html' , context)
+    return render(request , 'post/blog_details.html' , context)
 
 def post_by_tag(request , tag):
     post_by_tag = Post.objects.filter(tags__name__in=[tag])
