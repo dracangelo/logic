@@ -1,1 +1,1 @@
-web: gunicorn logisticexpress.wsgi --log-file
+web: gunicorn logisticexpress.wsgi
